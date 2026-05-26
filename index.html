@@ -1,0 +1,478 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SCRM 2.0 功能需求文档 V0.1</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --accent:      #2563eb;
+      --accent-bg:   #eff6ff;
+      --sidebar-w:   212px;
+      --text:        #1e2533;
+      --text-muted:  #64748b;
+      --border:      #e4e7ed;
+      --bg-page:     #f0f3f8;
+      --bg-card:     #ffffff;
+      --radius:      6px;
+      --font: 'Noto Sans SC','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--font);background:var(--bg-page);color:var(--text);font-size:14px;line-height:1.75}
+
+    /* ── Sidebar ── */
+    .sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--sidebar-w);background:#1a2035;overflow-y:auto;padding:28px 0 40px;z-index:100}
+    .sidebar-brand{padding:0 20px 20px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:16px}
+    .sidebar-brand .product{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#7b8aaa;margin-bottom:4px}
+    .sidebar-brand .title{font-size:13px;font-weight:600;color:#e2e8f0;line-height:1.4}
+    .sidebar-section{padding:0 12px 8px}
+    .sidebar-section-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#4a5568;font-weight:600;padding:0 8px;margin-bottom:4px}
+    .sidebar a{display:block;padding:6px 8px;border-radius:4px;color:#94a3b8;text-decoration:none;font-size:12.5px;transition:background .15s,color .15s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .sidebar a:hover{background:rgba(255,255,255,.07);color:#e2e8f0}
+    .sidebar a.active{background:rgba(37,99,235,.25);color:#93c5fd}
+    .sidebar a.sub{padding-left:20px;font-size:12px;color:#64748b}
+    .sidebar a.sub:hover{color:#94a3b8}
+    .sidebar::-webkit-scrollbar{width:4px}
+    .sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:2px}
+
+    /* ── Main ── */
+    .main{margin-left:var(--sidebar-w);padding:40px 52px 80px;max-width:calc(var(--sidebar-w) + 960px)}
+
+    /* ── Doc header ── */
+    .doc-header{margin-bottom:36px;padding-bottom:24px;border-bottom:2px solid var(--border)}
+    .doc-header .doc-label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:8px}
+    .doc-header h1{font-size:26px;font-weight:700;color:var(--text)}
+    .doc-header .doc-meta{margin-top:10px;font-size:13px;color:var(--text-muted)}
+
+    /* ── Sections ── */
+    section{margin-bottom:44px}
+    section+section{border-top:1px solid var(--border);padding-top:36px}
+    h2{font-size:18px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+    h2 .num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;background:var(--accent);color:#fff;font-size:13px;font-weight:700;flex-shrink:0}
+    h3{font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin:24px 0 12px}
+    p{margin-bottom:12px;color:#374151;line-height:1.8}
+
+    .card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+    .section-desc{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:var(--radius);padding:14px 18px;margin-bottom:20px;color:#374151;line-height:1.8}
+
+    /* ── Tables ── */
+    .table-wrap{overflow-x:auto}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    thead tr{background:#f8faff}
+    thead th{padding:10px 14px;text-align:left;font-weight:600;font-size:12px;color:var(--text-muted);letter-spacing:.04em;border-bottom:1.5px solid var(--border);white-space:nowrap}
+    tbody tr{border-bottom:1px solid var(--border)}
+    tbody tr:last-child{border-bottom:none}
+    tbody tr:hover{background:#fafbff}
+    tbody td{padding:10px 14px;vertical-align:top;color:#374151;line-height:1.7}
+    tbody td:first-child{font-weight:500;color:var(--text);white-space:nowrap}
+
+    /* disabled row (not in this period) */
+    tr.row-disabled td{color:#c0c7d4 !important;font-weight:400 !important}
+    tr.row-disabled td:first-child{font-weight:400 !important}
+    .deferred-badge{display:inline-block;margin-left:6px;padding:1px 6px;border-radius:4px;font-size:10px;font-weight:500;background:#f1f5f9;color:#94a3b8;vertical-align:middle;border:1px solid #e2e8f0}
+
+    /* ── Badges ── */
+    .badge{display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:600}
+    .badge-p0{background:#dbeafe;color:#1d4ed8}
+    .badge-p1{background:#f3f4f6;color:#6b7280}
+    .tag-tbd{display:inline-block;padding:1px 6px;border-radius:4px;font-size:11px;font-weight:500;background:#f3f4f6;color:#6b7280}
+
+    /* ── Req table groups ── */
+    .req-group-header td{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);background:var(--accent-bg) !important;padding:7px 14px;border-bottom:1px solid #bfdbfe !important}
+    .req-group-header:hover td{background:var(--accent-bg) !important}
+
+    /* ── Module layout with side image ── */
+    .module-with-img{display:flex;gap:20px;align-items:flex-start}
+    .module-main{flex:1;min-width:0}
+    .module-side-img{flex-shrink:0;width:200px;display:flex;flex-direction:column;gap:12px;padding-top:48px}
+    .side-img-block{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:#fff}
+    .side-img-block img{width:100%;display:block}
+    .side-img-caption{font-size:11px;color:var(--text-muted);text-align:center;padding:6px 8px;border-top:1px solid var(--border);background:#fafbfc}
+
+    /* ── Chat header timezone overlay ── */
+    .tz-img-wrap{position:relative;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:#fff}
+    .tz-img-wrap img{width:100%;display:block}
+    .tz-overlay{position:absolute;bottom:0;left:0;right:0;background:rgba(255,255,255,.95);border-top:1px solid var(--border);padding:6px 10px;font-size:11px;color:#374151;line-height:1.5}
+    .tz-overlay .tz-value{font-weight:600;color:var(--accent);font-size:12px}
+    .tz-overlay .tz-label{font-size:10px;color:var(--text-muted);letter-spacing:.04em}
+
+    /* ── Detail section with side images (module 3) ── */
+    .detail-with-side{display:flex;gap:16px;align-items:flex-start}
+    .detail-table-wrap{flex:1;min-width:0}
+    .detail-side-imgs{flex-shrink:0;width:210px;display:flex;flex-direction:column;gap:12px}
+
+    /* ── Inline cell image ── */
+    .cell-with-img{display:flex;gap:12px;align-items:flex-start}
+    .cell-text{flex:1;min-width:0}
+    .cell-img{flex-shrink:0;width:150px;border:1px solid var(--border);border-radius:4px;overflow:hidden}
+    .cell-img img{width:100%;display:block}
+  </style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <div class="product">Product Requirements</div>
+    <div class="title">SCRM 2.0<br>功能需求文档 V0.1</div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">概览</div>
+    <a href="#version">版本记录</a>
+    <a href="#background">背景说明</a>
+    <a href="#requirements">需求列表</a>
+  </div>
+  <div class="sidebar-section" style="margin-top:8px">
+    <div class="sidebar-section-label">功能模块</div>
+    <a href="#module-1">1. 消息通知</a>
+    <a href="#module-1-list" class="sub">功能清单</a>
+    <a href="#module-1-detail" class="sub">功能详情</a>
+    <a href="#module-2">2. 客户时区</a>
+    <a href="#module-2-list" class="sub">功能清单</a>
+    <a href="#module-2-detail" class="sub">功能详情</a>
+    <a href="#module-3">3. 三方系统交互</a>
+    <a href="#module-3-list" class="sub">功能清单</a>
+    <a href="#module-3-detail" class="sub">功能详情</a>
+    <a href="#module-4">4. 多账号登录</a>
+    <a href="#module-4-list" class="sub">功能清单</a>
+    <a href="#module-4-detail" class="sub">功能详情</a>
+  </div>
+</nav>
+
+<main class="main">
+
+  <div class="doc-header">
+    <div class="doc-label">SCRM 2.0 · 会话工作台体验完善</div>
+    <h1>功能需求文档 V0.1</h1>
+    <div class="doc-meta">2026-05-21 &nbsp;·&nbsp; 产品：张奥 &nbsp;·&nbsp; 范围：消息通知 / 客户时区 / 三方系统交互 / 多账号登录</div>
+  </div>
+
+  <!-- 版本记录 -->
+  <section id="version">
+    <h2>版本记录</h2>
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>版本</th><th>日期</th><th>需求范围</th><th>产品</th></tr></thead>
+          <tbody><tr>
+            <td>V0.1</td><td>2026-05-21</td>
+            <td>消息通知、客户时区、三方系统交互、多账号登录</td>
+            <td>张奥</td>
+          </tr></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 背景说明 -->
+  <section id="background">
+    <h2>背景说明</h2>
+    <p>SCRM 2.0 聚焦会话工作台的基础功能修复与体验完善。本文档覆盖四个功能模块：消息通知增强、客户当地时间展示、三方系统内嵌交互、多账号登录管理。另有翻译功能、内核更换、UI 升级等内容与本期需求一同打包发布，不在本文档范围。</p>
+  </section>
+
+  <!-- 需求列表 -->
+  <section id="requirements">
+    <h2>需求列表</h2>
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>需求名称</th><th>需求说明</th><th style="width:64px">优先级</th></tr></thead>
+          <tbody>
+            <tr class="req-group-header"><td colspan="3">消息通知</td></tr>
+            <tr><td>未读角标</td><td>任务栏图标展示所有已登录账号的未读消息合计数</td><td><span class="badge badge-p0">P0</span></td></tr>
+            <tr><td>任务栏闪烁</td><td>窗口失焦或最小化时，新消息触发任务栏图标闪烁提醒</td><td><span class="badge badge-p0">P0</span></td></tr>
+            <tr><td>托盘图标闪烁及预览</td><td>系统托盘图标随新消息闪烁，悬停展示最新消息预览</td><td><span class="badge badge-p0">P0</span></td></tr>
+            <tr><td>新消息提示音</td><td>收到外部客户新消息时播放内置提示音，支持开关设置</td><td><span class="badge badge-p0">P0</span></td></tr>
+            <tr><td>通知设置</td><td>在设置中提供声音提醒独立开关及配置能力</td><td><span class="badge badge-p0">P0</span></td></tr>
+            <tr class="req-group-header"><td colspan="3">客户时区</td></tr>
+            <tr><td>客户当地时间展示</td><td>在会话界面展示客户所在地的实时当地时间及 UTC 偏移</td><td><span class="badge badge-p0">P0</span></td></tr>
+            <tr><td>时区来源自动推断</td><td>从客户手机号或 WhatsApp 新的 BSUID 判断所属国家</td><td><span class="badge badge-p0">P0</span></td></tr>
+            <tr><td>时区支持设置</td><td>手动调整时区和防打扰设置</td><td><span class="badge badge-p1">P1</span></td></tr>
+            <tr class="req-group-header"><td colspan="3">三方系统交互</td></tr>
+            <tr><td>三方系统内嵌面板</td><td>在 SCRM 内侧边栏拉起原生页填写 CRM 客户信息 / 项目信息，获取返回结果，不跳转三方页面</td><td><span class="badge badge-p0">P0</span></td></tr>
+            <tr><td>三方系统提交结果展示</td><td>提交成功关闭面板更新状态；失败保留表单并提供重试入口</td><td><span class="badge badge-p0">P0</span></td></tr>
+            <tr class="req-group-header"><td colspan="3">多账号登录</td></tr>
+            <tr><td>任意账号可退出</td><td>解除对第一个登录账号的退出锁定，所有账号均可执行退出操作</td><td><span class="badge badge-p0">P0</span></td></tr>
+            <tr><td>最后账号保护</td><td>仅剩一个账号时，退出入口置灰并展示"至少保留一个账号"提示</td><td><span class="badge badge-p0">P0</span></td></tr>
+            <tr><td>退出确认弹窗</td><td>退出前弹出确认弹窗，防止误操作</td><td><span class="badge badge-p0">P0</span></td></tr>
+            <tr><td>退出后自动切换</td><td>退出当前活跃账号后，自动切换至列表中其他账号</td><td><span class="badge badge-p0">P0</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ MODULE 1 ═══ -->
+  <section id="module-1">
+    <h2><span class="num">1</span>消息通知</h2>
+    <div class="section-desc">
+      SCRM 当前仅通过 Windows 系统通知推送新消息。当系统通知权限被关闭时或未注意时，PM 和 PM 助理在窗口失焦或最小化状态下无法感知新消息。本模块在 Windows 系统通知之外新增应用内多通道提醒能力，包括任务栏图标闪烁、系统托盘图标闪烁、未读角标和新消息提示音，并为用户提供独立的提醒设置开关。
+    </div>
+
+    <h3 id="module-1-list">功能清单</h3>
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>功能模块</th><th>功能说明</th></tr></thead>
+          <tbody>
+            <tr><td>未读角标</td><td>任务栏图标展示所有已登录账号的未读消息合计数</td></tr>
+            <tr><td>任务栏闪烁</td><td>窗口失焦时收到外部客户新消息，触发任务栏图标闪烁</td></tr>
+            <tr><td>托盘图标闪烁及预览</td><td>系统托盘图标随新消息闪烁，悬停展示最新消息预览</td></tr>
+            <tr><td>新消息提示音</td><td>收到客户新消息时播放提示音</td></tr>
+            <tr><td>通知设置</td><td>提供声音提醒配置开关，支持下拉选择提示音</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <h3 id="module-1-detail">功能详情</h3>
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th style="width:120px">字段</th><th style="width:110px">控件类型</th><th>需求说明</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>任务栏图标角标</td><td>系统角标</td>
+              <td>
+                <div class="cell-with-img">
+                  <div class="cell-text">展示所有已登录账号的未读消息合计数。未读全部清零后角标消失。超过 99 时展示"99+"。</div>
+                  <div class="cell-img"><img src="assets/ref-taskbar.png" alt="任务栏角标示意" /></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>任务栏闪烁</td><td>系统级提醒</td>
+              <td>客户端窗口最小化、失焦或被其他窗口遮挡时，收到外部客户新消息触发任务栏图标闪烁。用户点击任务栏并打开对应会话后停止闪烁。当前会话处于聚焦状态时不触发。</td>
+            </tr>
+            <tr>
+              <td>托盘图标闪烁</td><td>系统托盘提醒</td>
+              <td>
+                <div class="cell-with-img">
+                  <div class="cell-text">与任务栏闪烁同步触发与停止。悬停于托盘图标时展示最新一条未读消息的发送方名称及消息内容预览，最多展示 30 字。</div>
+                  <div class="cell-img"><img src="assets/ref-tray.png" alt="系统托盘示意" /></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>新消息提示音</td><td>音频</td>
+              <td>默认开启。收到新消息时播放内置短提示音。5 秒内连续到达的多条新消息仅播放一次提示音。</td>
+            </tr>
+            <tr>
+              <td>通知设置入口</td><td>开关列表</td>
+              <td>
+                <div class="cell-with-img">
+                  <div class="cell-text">入口位于 设置 › 翻译设置下方 › 通知设置（新增）。提供"声音提醒"独立开关。声音提醒开启后，支持通过下拉选择提示音类型。</div>
+                  <div class="cell-img"><img src="assets/scrm-notification-settings-v3.png" alt="通知设置页示意" /></div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ MODULE 2 ═══ -->
+  <section id="module-2">
+    <h2><span class="num">2</span>客户时区</h2>
+
+    <!-- wrap content + side image -->
+    <div class="module-with-img">
+      <div class="module-main">
+        <div class="section-desc">
+          PM 在与海外客户沟通时，缺乏客户所在地当前时间的直观参考，存在在客户非工作时段发送消息或错过最佳回复窗口的风险。本模块通过客户手机号或 WhatsApp BSUID 自动推断所属国家并展示当地实时时间，支持手动调整时区，并提供防打扰设置以避免在客户非工作时段发送消息。
+        </div>
+
+        <h3 id="module-2-list">功能清单</h3>
+        <div class="card">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>功能模块</th><th>功能说明</th></tr></thead>
+              <tbody>
+                <tr><td>客户当地时间展示</td><td>在会话头部或客户信息侧栏展示客户当地实时时间</td></tr>
+                <tr><td>时区来源自动推断</td><td>从客户手机号或 WhatsApp 新的 BSUID 判断所属国家及时区</td></tr>
+                <tr><td>实时刷新</td><td>当地时间每秒自动刷新，无需手动操作</td></tr>
+                <tr><td>时区支持设置</td><td>支持手动调整时区，并提供防打扰设置</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <h3 id="module-2-detail">功能详情</h3>
+        <div class="card">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th style="width:120px">字段</th><th style="width:110px">控件类型</th><th>需求说明</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td>客户当地时间</td><td>文本展示</td>
+                  <td>在会话头部客户名称旁或客户信息侧栏展示客户所在地当前时间，格式为"2026-05-15 12:26:04 (UTC+10)"。打开会话时立即计算并展示；页面停留期间每秒自动刷新。</td>
+                </tr>
+                <tr>
+                  <td>时区来源推断</td><td>系统规则</td>
+                  <td>优先从客户手机号区号推断所属国家及时区；若手机号无法获取，则通过 WhatsApp BSUID 接口查询地区后推断时区。若国家只有一个时区，使用该国家唯一时区；若国家有多个时区，使用首都所在地 IANA 时区。</td>
+                </tr>
+                <tr>
+                  <td>时区空状态</td><td>文本提示</td>
+                  <td>所有来源均无法推断时区时，展示"--"，不展示错误或默认时间。</td>
+                </tr>
+                <tr class="row-disabled">
+                  <td>时区手动修改 <span class="deferred-badge">本期不实现</span></td><td>编辑入口</td>
+                  <td>客户信息侧栏提供时区/城市编辑入口。修改保存后，当前会话当地时间即时刷新，并以 Toast 确认"客户时区已更新"。手动选择优先级高于自动推断结果。</td>
+                </tr>
+                <tr class="row-disabled">
+                  <td>防打扰设置 <span class="deferred-badge">本期不实现</span></td><td>设置开关</td>
+                  <td>在通知设置或客户信息区提供防打扰开关。开启后，当客户当地时间处于设定的非工作时段时，展示提示或拦截消息发送。默认非工作时段定义为当地时间 19:00–09:00。</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- side: chat header + timezone overlay -->
+      <div class="module-side-img">
+        <div class="side-img-block">
+          <div class="tz-img-wrap">
+            <img src="assets/ref-timezone-header.png" alt="客户时区展示示意" />
+            <div class="tz-overlay">
+              <div class="tz-label">当地时间</div>
+              <div class="tz-value">2026-05-15 12:26:04 (UTC+10)</div>
+            </div>
+          </div>
+          <div class="side-img-caption">会话头部时区展示示意</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ MODULE 3 ═══ -->
+  <section id="module-3">
+    <h2><span class="num">3</span>三方系统交互</h2>
+    <div class="section-desc">
+      PM 在会话跟进过程中需将客户信息录入 CRM 系统或创建关联项目，当前操作需跳转至三方系统页面，导致会话工作台失去焦点、操作中断。本模块在 SCRM 侧边栏内拉起侧边栏填写，允许直接在当前工作台完成信息填写与提交，获取接口返回结果，无需跳转至三方页面。
+    </div>
+
+    <h3 id="module-3-list">功能清单</h3>
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>功能模块</th><th>功能说明</th></tr></thead>
+          <tbody>
+            <tr><td>侧边栏原生页面板</td><td>在 SCRM 侧边栏内调起侧边栏，不跳转外部页面</td></tr>
+            <tr><td>客户信息预填</td><td>面板打开时自动预填客户基础信息至对应字段</td></tr>
+            <tr><td>表单提交</td><td>填写完成后向 CRM 接口发起写入请求</td></tr>
+            <tr><td>结果状态展示</td><td>提交成功关闭面板并更新关联状态；失败保留表单并提供重试</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <h3 id="module-3-detail">功能详情</h3>
+    <!-- table + two stacked images on the right -->
+    <div class="detail-with-side">
+      <div class="detail-table-wrap">
+        <div class="card">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th style="width:120px">字段</th><th style="width:130px">控件类型</th><th>需求说明</th></tr></thead>
+              <tbody>
+                <tr><td>添加触发入口</td><td>文字按钮 / 图标按钮</td><td>在客户模块点击创建客户或编辑客户信息；创建项目或编辑项目信息；拉起二级侧边栏，不调起 CRM 窗口。</td></tr>
+                <tr><td>侧边栏原生页面板</td><td>侧边抽屉</td><td>面板内展示 CRM 创建客户/项目接口所提供的所有字段，客户姓名、手机号、国家负责人等基础信息自动预填至对应字段，可人工修改后提交。</td></tr>
+                <tr><td>表单提交</td><td>主操作按钮</td><td>点击"提交"后按钮进入 loading 状态，SCRM 向 CRM 接口发起写入请求。接口超时阈值 5 秒。提交期间表单字段只读，防止重复提交。</td></tr>
+                <tr><td>提交成功状态</td><td>Toast + 面板关闭</td><td>接口返回成功后：弹出 Toast"添加成功"；面板自动关闭；会话工作台客户信息区更新关联状态标识（如"已添加至 CRM"）。</td></tr>
+                <tr><td>提交失败状态</td><td>内联错误提示 + 重试</td><td>接口返回失败或超时：面板不关闭，已填写内容保留；在提交按钮上方展示失败原因文字；按钮恢复为可点击状态供重试。</td></tr>
+                <tr><td>面板关闭确认</td><td>二次确认弹窗</td><td>填写过程中点击关闭按钮，弹出确认弹窗："表单内容将不被保存，确认关闭？"。确认后关闭面板并丢弃内容；取消后回到填写状态。提交成功后关闭无需确认。</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- right side: two images stacked -->
+      <div class="detail-side-imgs">
+        <div class="side-img-block">
+          <img src="assets/ref-crm-dialog.png" alt="CRM 创建客户弹窗（现状）" />
+          <div class="side-img-caption">CRM 创建客户弹窗（现状）</div>
+        </div>
+        <div class="side-img-block">
+          <img src="assets/ref-crm-sidebar-form-v2.png" alt="SCRM 侧边栏填写方式（目标）" />
+          <div class="side-img-caption">侧边栏填写方式（目标）</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ MODULE 4 ═══ -->
+  <section id="module-4">
+    <h2><span class="num">4</span>多账号登录</h2>
+
+    <div class="module-with-img">
+      <div class="module-main">
+        <div class="section-desc">
+          SCRM 当前支持多账号同时登录，但第一个登录的账号被锁定、无法退出，影响账号管理的灵活性。本模块调整账号退出逻辑，支持退出任意账号，同时约束最后一个账号不可退出，以保证客户端始终维持至少一个账号在线。
+        </div>
+
+        <h3 id="module-4-list">功能清单</h3>
+        <div class="card">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>功能模块</th><th>功能说明</th></tr></thead>
+              <tbody>
+                <tr><td>任意账号可退出</td><td>解除对第一个账号的退出锁定，所有账号均可执行退出操作</td></tr>
+                <tr><td>最后账号保护</td><td>仅剩一个账号时，退出入口置灰并展示保留提示</td></tr>
+                <tr><td>退出确认弹窗</td><td>退出前弹出确认弹窗，防止误操作</td></tr>
+                <tr><td>退出后自动切换</td><td>退出当前活跃账号后，自动切换至列表中其他账号</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <h3 id="module-4-detail">功能详情</h3>
+        <div class="card">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th style="width:120px">字段</th><th style="width:130px">控件类型</th><th>需求说明</th></tr></thead>
+              <tbody>
+                <tr><td>账号退出入口</td><td>图标按钮</td><td>账号列表中每个账号条目提供退出按钮。所有账号均展示该入口，不因登录顺序锁定。按钮位于账号条目右侧，鼠标悬停时展示。</td></tr>
+                <tr><td>最后账号保护</td><td>按钮禁用 + Tooltip</td><td>账号列表仅剩一个账号时，该账号的退出按钮置灰且不可点击。鼠标悬停时展示 Tooltip："至少保留一个已登录账号"。账号数量恢复为多于一个时，退出按钮自动恢复为可用状态。</td></tr>
+                <tr><td>退出确认弹窗</td><td>模态弹窗</td><td>点击退出按钮（非最后一个账号）后，弹出确认弹窗，内容包含：说明文字"确认退出账号 [账号标识]？"；主操作按钮"确认退出"（危险色）；次操作按钮"取消"。点击取消关闭弹窗，不执行退出。</td></tr>
+                <tr><td>退出执行</td><td>系统操作</td><td>确认退出后，该账号的本地会话数据、Token、未发送草稿清除；账号从右侧账号列表移除。</td></tr>
+                <tr><td>退出后自动切换</td><td>系统行为</td><td>退出非当前活跃账号时，不影响当前工作台显示。退出当前活跃账号后，自动切换至列表中最近使用的其他账号，会话工作台随之刷新。</td></tr>
+                <tr><td>账号排列顺序</td><td>列表规则</td><td>账号列表按首次登录时间先后顺序固定排列，不支持手动调整。</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- side: multi-account screenshot -->
+      <div class="module-side-img">
+        <div class="side-img-block">
+          <img src="assets/ref-multi-account.png" alt="多账号管理示意" />
+          <div class="side-img-caption">多账号管理示意</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  const anchors = document.querySelectorAll('section[id], h3[id]');
+  const links = document.querySelectorAll('.sidebar a[href^="#"]');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const a = document.querySelector(`.sidebar a[href="#${e.target.id}"]`);
+        if (a) a.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  anchors.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

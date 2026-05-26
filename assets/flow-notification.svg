@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 680" width="960" height="680">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', 'Microsoft JhengHei', 'SimHei', sans-serif; }
+  </style>
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#3b82f6"/>
+    </marker>
+  </defs>
+  <rect width="960" height="680" fill="#ffffff"/>
+  <text x="40" y="32" font-size="16" font-weight="600" fill="#111827">ˆoåæÑA</text>
+
+  <!-- A: Start pill -->
+  <rect x="380" y="48" width="200" height="44" rx="22" fill="#111827"/>
+  <text x="480" y="74" font-size="14" font-weight="500" fill="#ffffff" text-anchor="middle">°ˆo0¾</text>
+
+  <!-- A’B -->
+  <line x1="480" y1="92" x2="480" y2="133" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- B: Diamond SMÝ/&Z& -->
+  <polygon points="480,137 610,185 480,233 350,185" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1.5"/>
+  <text x="480" y="181" font-size="13" font-weight="500" fill="#111827" text-anchor="middle">SMÝ</text>
+  <text x="480" y="197" font-size="13" font-weight="500" fill="#111827" text-anchor="middle">/&Z&</text>
+
+  <!-- B’C / (left) -->
+  <path d="M350,185 L200,185 L200,314" stroke="#3b82f6" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+  <rect x="267" y="175" width="26" height="17" rx="2" fill="#ffffff" opacity="0.92"/>
+  <text x="280" y="187" font-size="12" fill="#374151" text-anchor="middle">/</text>
+
+  <!-- B’D & (right) -->
+  <path d="M610,185 L700,185 L700,314" stroke="#3b82f6" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+  <rect x="636" y="175" width="26" height="17" rx="2" fill="#ffffff" opacity="0.92"/>
+  <text x="649" y="187" font-size="12" fill="#374151" text-anchor="middle">&</text>
+
+  <!-- C: ô°ˆohæÑ:Ð’ -->
+  <rect x="90" y="318" width="220" height="52" rx="4" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="200" y="340" font-size="13" font-weight="500" fill="#111827" text-anchor="middle">ô°ˆoh</text>
+  <text x="200" y="357" font-size="13" font-weight="500" fill="#111827" text-anchor="middle">æÑ:Ð’</text>
+
+  <!-- D: *ûÒ+û¡êÁ+ðó -->
+  <rect x="570" y="318" width="260" height="52" rx="4" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="700" y="339" font-size="13" font-weight="500" fill="#111827" text-anchor="middle">*ûÒ + û¡êÁ</text>
+  <text x="700" y="357" font-size="13" font-weight="500" fill="#111827" text-anchor="middle">+ ðóÐ’</text>
+
+  <!-- D’E -->
+  <line x1="700" y1="370" x2="700" y2="408" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- E: Diamond WindowsåCP -->
+  <polygon points="700,412 820,460 700,508 580,460" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1.5"/>
+  <text x="700" y="455" font-size="12" font-weight="500" fill="#111827" text-anchor="middle">Windows å</text>
+  <text x="700" y="471" font-size="12" font-weight="500" fill="#111827" text-anchor="middle">CP/&ï(</text>
+
+  <!-- E’F / (left) -->
+  <path d="M580,460 L540,460 L540,568" stroke="#3b82f6" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+  <rect x="518" y="450" width="26" height="17" rx="2" fill="#ffffff" opacity="0.92"/>
+  <text x="531" y="462" font-size="12" fill="#374151" text-anchor="middle">/</text>
+
+  <!-- E’G & (right) -->
+  <path d="M820,460 L858,460 L858,568" stroke="#3b82f6" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+  <rect x="834" y="450" width="26" height="17" rx="2" fill="#ffffff" opacity="0.92"/>
+  <text x="847" y="462" font-size="12" fill="#374151" text-anchor="middle">&</text>
+
+  <!-- F: à U:ûß9—å -->
+  <rect x="440" y="572" width="200" height="52" rx="4" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="540" y="594" font-size="13" font-weight="500" fill="#111827" text-anchor="middle">à U:</text>
+  <text x="540" y="611" font-size="13" font-weight="500" fill="#111827" text-anchor="middle">ûß9—å</text>
+
+  <!-- G: ÅÝY”(…Ð’ S -->
+  <rect x="750" y="572" width="200" height="52" rx="4" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="850" y="594" font-size="13" font-weight="500" fill="#111827" text-anchor="middle">ÅÝY</text>
+  <text x="850" y="611" font-size="13" font-weight="500" fill="#111827" text-anchor="middle">”(…Ð’ S</text>
+</svg>
