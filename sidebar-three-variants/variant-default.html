@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>方案 A · 默认全展开 | G-Builder OS V1.0 侧边栏</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body data-page="sidebar" data-variant="default">
+    <div class="app-shell">
+      <div class="app-shell__sidebar" data-role="sidebar-host">
+        <!-- 由 app.js 注入 sidebar -->
+      </div>
+
+      <div class="app-shell__main">
+        <header class="app-topbar">
+          <nav class="app-topbar__crumbs" aria-label="面包屑">
+            <span>数据看板</span>
+            <span class="sep">/</span>
+            <span class="now" data-role="crumb-now">PM 看板</span>
+          </nav>
+          <div class="app-topbar__spacer"></div>
+          <span class="app-topbar__variant-pill">方案 A · 默认全展开</span>
+          <a class="app-topbar__back" href="index.html">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+            返回方案对比
+          </a>
+          <span class="app-topbar__avatar">PM</span>
+        </header>
+
+        <main class="app-main">
+          <div class="app-main__placeholder">
+            <div class="app-main__placeholder-title">页面主区域</div>
+            <div class="app-main__placeholder-hint">主区域内容由各模块按需渲染</div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

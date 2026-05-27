@@ -1,0 +1,950 @@
+/* ============================================================
+ * G-Builder OS V1.0 · 侧边栏三版方案 · styles.css
+ *
+ * 视觉规范：
+ *   context/UI-Style.md（B 端管理后台基线）
+ *   skills/Web Coding/references/GB营销平台OS-UI规范.md（GB 品牌：#1A4D8F + rounded-xl 12px）
+ *
+ * 对齐基线（关键）：
+ *   - 所有交互行（工作台 / 一级 nav / 分组标题 / 二级 nav）共用：
+ *       margin:  0 var(--row-margin-x)   = 0 8px
+ *       padding: var(--row-pad-y) var(--row-pad-x) = 7px 12px
+ *   - 一级 icon 中心 ----- 距 sidebar 左缘 29px
+ *   - 一级 label 起点 ----- 距 sidebar 左缘 48px
+ *   - 二级 label 起点 ----- 距 sidebar 左缘 48px（与一级 label 左对齐，仅靠无 icon + tree line + 灰字区分层级）
+ *   - 分组标题文字起点 ---- 距 sidebar 左缘 20px（无 icon 的纯文字位置）
+ *   - tree line 位置 ----- left = 29px（沿一级 icon 中心垂直延伸）
+ * ============================================================ */
+
+/* ---------- 1. CSS Variables ---------- */
+:root {
+  /* 品牌色 */
+  --brand-700: #163E72;
+  --brand-600: #1A4D8F;
+  --brand-500: #2E7BD6;
+  --brand-100: #D4E5F5;
+  --brand-50: #EBF3FB;
+  --accent-500: #00A3B4;
+
+  /* 中性色 */
+  --bg-page: #F4F6FA;
+  --bg-card: #FFFFFF;
+  --bg-sidebar: #FFFFFF;
+  --bg-hover: #F1F4F9;
+  --bg-soft: #F8FAFC;
+  --border: #E5E9F0;
+  --border-soft: #EEF1F6;
+  --text-strong: #111827;
+  --text: #374151;
+  --text-muted: #6B7280;
+  --text-faint: #9CA3AF;
+
+  /* 几何 */
+  --radius-card: 12px;
+  --radius-item: 8px;
+  --radius-pill: 999px;
+
+  /* 阴影 */
+  --shadow-card: 0 1px 2px rgba(15, 42, 79, 0.04), 0 4px 12px rgba(15, 42, 79, 0.05);
+  --shadow-popover: 0 12px 32px rgba(15, 42, 79, 0.12);
+
+  /* 字体 */
+  --font-sans: 'PingFang SC', 'Microsoft YaHei', -apple-system, 'Segoe UI', 'Inter', sans-serif;
+  --font-display: 'Space Grotesk', 'PingFang SC', sans-serif;
+
+  /* 布局 */
+  --sidebar-w: 256px;
+  --topbar-h: 56px;
+
+  /* Sidebar 内对齐变量（关键） */
+  --row-margin-x: 8px;
+  --row-pad-x: 12px;
+  --row-pad-y: 7px;
+  --icon-size: 18px;
+  --icon-gap: 10px;
+  --indent-l2: 28px;
+}
+
+/* ---------- 2. Reset ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--text);
+  background: var(--bg-page);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.55;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ============================================================
+ * 3. Sidebar 页面 Shell（每个 variant-*.html 共用）
+ *    布局：aside(256px) + main(fill rest)
+ * ============================================================ */
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  background: var(--bg-page);
+}
+
+.app-shell__sidebar {
+  flex-shrink: 0;
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.app-shell__main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-topbar {
+  height: var(--topbar-h);
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.app-topbar__crumbs {
+  font-size: 13px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.app-topbar__crumbs .sep {
+  color: var(--text-faint);
+  opacity: 0.6;
+}
+
+.app-topbar__crumbs .now {
+  color: var(--text-strong);
+  font-weight: 500;
+}
+
+.app-topbar__spacer {
+  flex: 1;
+}
+
+.app-topbar__variant-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--brand-600);
+  background: var(--brand-50);
+  padding: 5px 10px;
+  border-radius: var(--radius-pill);
+  font-weight: 500;
+}
+
+.app-topbar__back {
+  font-size: 13px;
+  color: var(--text-muted);
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.16s ease, color 0.16s ease, border-color 0.16s ease;
+}
+
+.app-topbar__back:hover {
+  color: var(--brand-600);
+  border-color: var(--brand-100);
+  background: var(--brand-50);
+}
+
+.app-topbar__avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--brand-600), var(--accent-500));
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.app-main {
+  flex: 1;
+  padding: 24px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  overflow: auto;
+}
+
+.app-main__placeholder {
+  flex: 1;
+  min-height: 360px;
+  border-radius: var(--radius-card);
+  border: 1px dashed var(--border);
+  background:
+    repeating-linear-gradient(
+      135deg,
+      transparent 0,
+      transparent 14px,
+      rgba(26, 77, 143, 0.025) 14px,
+      rgba(26, 77, 143, 0.025) 15px
+    );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--text-faint);
+}
+
+.app-main__placeholder-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+.app-main__placeholder-hint {
+  font-size: 12px;
+  color: var(--text-faint);
+}
+
+/* ============================================================
+ * 4. Sidebar 通用基础（三版共享）
+ * ============================================================ */
+
+.sidebar {
+  width: var(--sidebar-w);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-sidebar);
+}
+
+/* ---------- 4.1 Logo 区 ---------- */
+.sidebar__logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-soft);
+  flex-shrink: 0;
+  min-height: var(--topbar-h);
+}
+
+.sidebar__logo-mark {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: linear-gradient(140deg, #F7FAFF 0%, #ECF2FB 100%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #E0E8F4;
+  flex-shrink: 0;
+}
+
+.sidebar__logo-mark svg {
+  width: 18px;
+  height: 18px;
+  color: var(--brand-600);
+}
+
+.sidebar__logo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.sidebar__logo-title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-strong);
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+.sidebar__logo-sub {
+  font-size: 10px;
+  color: var(--text-faint);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ---------- 4.2 Sidebar 主滚动区 ---------- */
+.sidebar__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.sidebar__body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar__body::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+/* ---------- 4.3 工作台 = 顶部一级独立入口 ---------- */
+.sidebar__primary {
+  display: flex;
+  align-items: center;
+  gap: var(--icon-gap);
+  margin: 0 var(--row-margin-x) 8px;
+  padding: 10px var(--row-pad-x);
+  border-radius: var(--radius-item);
+  background: linear-gradient(135deg, rgba(26, 77, 143, 0.07) 0%, rgba(46, 123, 214, 0.04) 100%);
+  border: 1px solid rgba(26, 77, 143, 0.12);
+  position: relative;
+  width: calc(100% - 2 * var(--row-margin-x));
+  transition: background 0.16s ease, border-color 0.16s ease;
+}
+
+.sidebar__primary::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 9px;
+  bottom: 9px;
+  width: 3px;
+  background: var(--brand-600);
+  border-radius: 0 2px 2px 0;
+}
+
+.sidebar__primary:hover {
+  background: linear-gradient(135deg, rgba(26, 77, 143, 0.1) 0%, rgba(46, 123, 214, 0.06) 100%);
+  border-color: rgba(26, 77, 143, 0.2);
+}
+
+.sidebar__primary-icon {
+  width: var(--icon-size);
+  height: var(--icon-size);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--brand-600);
+  flex-shrink: 0;
+}
+
+.sidebar__primary-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.sidebar__primary-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 1px;
+}
+
+.sidebar__primary-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-strong);
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+.sidebar__primary-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.2;
+}
+
+.sidebar__primary-arrow {
+  margin-left: auto;
+  color: var(--brand-600);
+  opacity: 0.55;
+  flex-shrink: 0;
+  display: inline-flex;
+}
+
+.sidebar__primary-arrow svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ---------- 4.4 分隔线（工作台与下方菜单之间） ---------- */
+.sidebar__divider {
+  margin: 4px var(--row-margin-x) 8px;
+  height: 1px;
+  background: var(--border-soft);
+}
+
+/* ---------- 4.5 一级 nav-item ---------- */
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--icon-gap);
+  margin: 0 var(--row-margin-x);
+  padding: var(--row-pad-y) var(--row-pad-x);
+  border-radius: var(--radius-item);
+  font-size: 14px;
+  color: var(--text);
+  width: calc(100% - 2 * var(--row-margin-x));
+  position: relative;
+  transition: background 0.14s ease, color 0.14s ease;
+}
+
+.nav-item:hover {
+  background: var(--bg-hover);
+}
+
+.nav-item__icon {
+  width: var(--icon-size);
+  height: var(--icon-size);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.nav-item__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.nav-item__label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nav-item__chev {
+  width: 14px;
+  height: 14px;
+  color: var(--text-faint);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.nav-item__chev svg {
+  width: 100%;
+  height: 100%;
+}
+
+.nav-item--active {
+  background: var(--brand-50);
+  color: var(--brand-600);
+  font-weight: 500;
+}
+
+.nav-item--active .nav-item__icon {
+  color: var(--brand-600);
+}
+
+/* 一级 nav-item 的左侧选中竖条（仅 active 时显示） */
+.nav-item--l1.nav-item--active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: var(--brand-600);
+  border-radius: 0 2px 2px 0;
+}
+
+/* ---------- 4.6 分组展开容器 ---------- */
+.nav-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-group__items {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow: hidden;
+  position: relative;
+  max-height: 600px;
+  transition: max-height 0.24s ease, opacity 0.18s ease;
+}
+
+.nav-group.is-collapsed .nav-group__items {
+  max-height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.nav-group.is-collapsed .nav-item__chev {
+  transform: rotate(-90deg);
+}
+
+/* tree line：从一级 icon 中心向下延伸 */
+.nav-group__items::before {
+  content: '';
+  position: absolute;
+  left: 29px; /* sidebar 内：margin 8 + padding 12 + icon 9 = 29px（一级 icon 中心垂直线） */
+  top: 4px;
+  bottom: 6px;
+  width: 1px;
+  background: var(--border);
+  pointer-events: none;
+}
+
+/* ---------- 4.7 二级 nav-item ---------- */
+.nav-item--l2 {
+  font-size: 13px;
+  color: var(--text-muted);
+  padding: 6px var(--row-pad-x) 6px calc(var(--row-pad-x) + var(--indent-l2));
+  /* padding-left = 12 + 28 = 40px ; label 起点 = 8(margin) + 40 = 48px = 一级 label 起点（左对齐） */
+}
+
+.nav-item--l2:hover {
+  background: var(--bg-hover);
+  color: var(--text);
+}
+
+.nav-item--l2.nav-item--active {
+  background: var(--brand-50);
+  color: var(--brand-600);
+  font-weight: 500;
+}
+
+.nav-item--l2.nav-item--active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: var(--brand-600);
+  border-radius: 0 2px 2px 0;
+}
+
+/* ---------- 4.8 底部用户卡 ---------- */
+.sidebar__footer {
+  flex-shrink: 0;
+  padding: 12px 16px;
+  border-top: 1px solid var(--border-soft);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.sidebar__footer-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--brand-600), var(--accent-500));
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.sidebar__footer-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.25;
+}
+
+.sidebar__footer-name {
+  color: var(--text-strong);
+  font-weight: 500;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar__footer-role {
+  font-size: 11px;
+  color: var(--text-faint);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ============================================================
+ * 5. 变体 A · default（默认全展开）
+ *    所有分组型一级默认展开（nav-group 不带 is-collapsed）
+ * ============================================================ */
+
+/* 与基础样式一致，无额外覆盖 */
+
+/* ============================================================
+ * 6. 变体 B · grouped（分组标题次级化）
+ *    - 分组型一级（会话管理 / Agent / 数据看板 / 数字资产）→ 降为小灰大写「分组标题」，
+ *      不可点击、不参与 active、永远展开
+ *    - 叶子型一级（SCRM 销售工作台 / 设置）→ 保留为常规一级 leaf 项地位
+ *    - 二级菜单 → 升为主导航项（与默认变体共用 .nav-item--l2 基础样式）
+ * ============================================================ */
+
+/* 分组型一级 → 「分组标题」样式 */
+.sidebar--grouped .nav-item--l1[data-type="group"] {
+  cursor: default;
+  pointer-events: none;
+  padding: 14px var(--row-pad-x) 6px;
+  background: transparent;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-faint);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  border-radius: 0;
+}
+
+.sidebar--grouped .nav-item--l1[data-type="group"]:hover {
+  background: transparent;
+}
+
+.sidebar--grouped .nav-item--l1[data-type="group"] .nav-item__icon,
+.sidebar--grouped .nav-item--l1[data-type="group"] .nav-item__chev {
+  display: none;
+}
+
+/* 分组标题的 label 起点重新计算：margin 8 + padding 12 = 20px（贴近图二参考） */
+.sidebar--grouped .nav-item--l1[data-type="group"] .nav-item__label {
+  flex: 0 1 auto;
+}
+
+/* 分组型一级永远不展示 active 竖线 / 蓝底（其 active 状态由二级承接） */
+.sidebar--grouped .nav-item--l1[data-type="group"].nav-item--active {
+  background: transparent;
+  color: var(--text-faint);
+  font-weight: 500;
+}
+
+.sidebar--grouped .nav-item--l1[data-type="group"].nav-item--active::before {
+  display: none;
+}
+
+/* 永远展开，禁用任何折叠动画 */
+.sidebar--grouped .nav-group__items {
+  max-height: none;
+  opacity: 1;
+  pointer-events: auto;
+  transition: none;
+}
+
+/* 二级菜单升为主导航项：14px / 正色 / 正常字重 / 可 active */
+.sidebar--grouped .nav-item--l2 {
+  font-size: 14px;
+  color: var(--text);
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+
+.sidebar--grouped .nav-item--l2:hover {
+  color: var(--text-strong);
+}
+
+.sidebar--grouped .nav-item--l2.nav-item--active {
+  color: var(--brand-600);
+  font-weight: 500;
+}
+
+/* 分组标题之间增加视觉呼吸（在每段标题之前给一点上边距） */
+.sidebar--grouped .nav-group + .nav-item--l1[data-type="leaf"],
+.sidebar--grouped .nav-item--l1[data-type="leaf"] + .nav-group .nav-item--l1[data-type="group"] {
+  margin-top: 4px;
+}
+
+/* ============================================================
+ * 7. 变体 C · text（纯文字无图标）
+ *    - 隐藏所有 icon
+ *    - label 占据原 icon + gap 的位置
+ *    - 二级 tree line 重新定位到一级 label 左侧（不再沿 icon 中心）
+ *    - 字号略微调整，强调文字层级
+ * ============================================================ */
+
+.sidebar--text .nav-item__icon,
+.sidebar--text .sidebar__primary-icon {
+  display: none;
+}
+
+.sidebar--text .nav-item {
+  font-size: 14px;
+}
+
+.sidebar--text .nav-item--l1 {
+  font-weight: 500;
+  color: var(--text-strong);
+}
+
+.sidebar--text .nav-item--l1:hover {
+  color: var(--brand-600);
+}
+
+.sidebar--text .nav-item--active {
+  font-weight: 600;
+}
+
+.sidebar--text .nav-item--l2 {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 400;
+  /* 二级缩进保持 indent-l2 = 28，让二级 label 与一级 label 形成视觉缩进对比
+     （text 版没有 icon，所以一级 label 起点 = 20px，二级 label 起点 = 20 + 28 = 48px）
+     padding-left: 12 + 28 = 40px → label = 8 + 40 = 48px
+   */
+}
+
+.sidebar--text .nav-item--l2.nav-item--active {
+  color: var(--brand-600);
+  font-weight: 500;
+}
+
+/* 工作台 primary 入口在纯文字版下的调整 */
+.sidebar--text .sidebar__primary {
+  gap: 0;
+}
+
+.sidebar--text .sidebar__primary-label {
+  font-size: 15px;
+}
+
+/* text 版的 tree line：text 版没有 icon，line 应该在一级 label 起点附近 */
+.sidebar--text .nav-group__items::before {
+  left: 20px; /* sidebar 内：margin 8 + padding 12 = 20px（一级 label 起点垂直线） */
+}
+
+/* ============================================================
+ * 8. 入口页（index.html）
+ * ============================================================ */
+
+.entry {
+  min-height: 100vh;
+  background: var(--bg-page);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 64px 40px;
+}
+
+.entry__header {
+  max-width: 880px;
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.entry__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--brand-50);
+  color: var(--brand-600);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+
+.entry__brand .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--brand-600);
+}
+
+.entry__title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text-strong);
+  letter-spacing: -0.015em;
+  margin: 0 0 14px;
+  line-height: 1.2;
+}
+
+.entry__desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.entry__cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(260px, 320px));
+  gap: 20px;
+  width: 100%;
+  max-width: 1080px;
+  justify-content: center;
+}
+
+@media (max-width: 920px) {
+  .entry__cards {
+    grid-template-columns: minmax(280px, 360px);
+  }
+}
+
+.entry-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: 22px 22px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: transform 0.16s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  text-decoration: none;
+}
+
+.entry-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-popover);
+  border-color: var(--brand-100);
+}
+
+.entry-card__index {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--brand-600);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.entry-card__title {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text-strong);
+  margin: 0;
+  letter-spacing: -0.005em;
+}
+
+.entry-card__subtitle {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.entry-card__highlights {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--text);
+}
+
+.entry-card__highlights li {
+  position: relative;
+  padding-left: 14px;
+  line-height: 1.55;
+}
+
+.entry-card__highlights li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--brand-500);
+}
+
+.entry-card__cta {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--brand-600);
+  padding-top: 14px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.entry-card__cta svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.16s ease;
+}
+
+.entry-card:hover .entry-card__cta svg {
+  transform: translateX(3px);
+}
+
+.entry__footer {
+  margin-top: 56px;
+  font-size: 12px;
+  color: var(--text-faint);
+  text-align: center;
+}
+
+.entry__footer code {
+  font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--bg-soft);
+  border: 1px solid var(--border-soft);
+  color: var(--text-muted);
+}

@@ -1,0 +1,140 @@
+<!--
+  Sidebar 组件结构骨架（UI 设计师独立编辑副本）
+
+  - 仅用于 UI 单独打开此片段调整 class / 文案 / 顺序
+  - 实际页面渲染由 app.js 按 mock-data.js 的 navTree 动态生成
+  - 三版通过根节点 class 切换样态：
+      .sidebar.sidebar--default     ← 方案 A 默认全展开（带图标）
+      .sidebar.sidebar--grouped     ← 方案 B 分组标题次级化（分组型一级降为小灰大写标题，永远展开不可折叠；二级升为主导航项）
+      .sidebar.sidebar--text        ← 方案 C 纯文字无图标
+  - 内容严格对齐 XMind G-Builder OS V1.0 脑图，圆圈数字（功能点数量）不参与设计
+-->
+
+<aside class="sidebar sidebar--default" data-role="sidebar" data-variant="default">
+  <!-- Logo 区 -->
+  <div class="sidebar__logo">
+    <span class="sidebar__logo-mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 11.5 12 4l9 7.5M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9" />
+      </svg>
+    </span>
+    <div class="sidebar__logo-text">
+      <span class="sidebar__logo-title">G-Builder OS</span>
+      <span class="sidebar__logo-sub">G-BUILDER OS · V1.0</span>
+    </div>
+  </div>
+
+  <div class="sidebar__body">
+    <!-- 工作台 = 顶部独立一级入口 -->
+    <button type="button" class="sidebar__primary" data-role="nav-item" data-item-id="workbench" data-level="1" data-type="leaf">
+      <span class="sidebar__primary-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 11.5 12 4l9 7.5M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9" />
+        </svg>
+      </span>
+      <span class="sidebar__primary-text">
+        <span class="sidebar__primary-label">工作台</span>
+        <span class="sidebar__primary-desc">日常入口 · 个人任务台</span>
+      </span>
+      <span class="sidebar__primary-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 6 15 12 9 18" />
+        </svg>
+      </span>
+    </button>
+
+    <div class="sidebar__divider" aria-hidden="true"></div>
+
+    <!-- SCRM 销售工作台（叶子型一级） -->
+    <button type="button" class="nav-item nav-item--l1" data-role="nav-item" data-item-id="scrm-workbench" data-level="1" data-type="leaf">
+      <span class="nav-item__icon"><!-- message --></span>
+      <span class="nav-item__label">SCRM 销售工作台</span>
+    </button>
+
+    <!-- 会话管理（分组型一级） -->
+    <section class="nav-group" data-group-id="conversation">
+      <button type="button" class="nav-item nav-item--l1" data-role="nav-item" data-item-id="conversation" data-level="1" data-type="group">
+        <span class="nav-item__icon"><!-- conversation --></span>
+        <span class="nav-item__label">会话管理</span>
+        <span class="nav-item__chev">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </span>
+      </button>
+      <div class="nav-group__items">
+        <button type="button" class="nav-item nav-item--l2" data-role="nav-item" data-item-id="conversation/lead-dispatch" data-level="2">
+          <span class="nav-item__label">线索分配</span>
+        </button>
+        <button type="button" class="nav-item nav-item--l2" data-role="nav-item" data-item-id="conversation/human-handoff" data-level="2">
+          <span class="nav-item__label">转人工</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Agent（分组型一级） -->
+    <section class="nav-group" data-group-id="agent">
+      <button type="button" class="nav-item nav-item--l1" data-role="nav-item" data-item-id="agent" data-level="1" data-type="group">
+        <span class="nav-item__icon"><!-- sparkles --></span>
+        <span class="nav-item__label">Agent</span>
+        <span class="nav-item__chev"></span>
+      </button>
+      <div class="nav-group__items">
+        <button type="button" class="nav-item nav-item--l2" data-role="nav-item" data-item-id="agent/ai-sales" data-level="2">
+          <span class="nav-item__label">AI 业务员</span>
+        </button>
+        <button type="button" class="nav-item nav-item--l2" data-role="nav-item" data-item-id="agent/ai-champion" data-level="2">
+          <span class="nav-item__label">AI 销冠</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- 数据看板（分组型一级，默认含 active 项 PM 看板） -->
+    <section class="nav-group" data-group-id="dashboard">
+      <button type="button" class="nav-item nav-item--l1" data-role="nav-item" data-item-id="dashboard" data-level="1" data-type="group">
+        <span class="nav-item__icon"><!-- bar-chart --></span>
+        <span class="nav-item__label">数据看板</span>
+        <span class="nav-item__chev"></span>
+      </button>
+      <div class="nav-group__items">
+        <button type="button" class="nav-item nav-item--l2 nav-item--active" data-role="nav-item" data-item-id="dashboard/pm" data-level="2">
+          <span class="nav-item__label">PM 看板</span>
+        </button>
+        <button type="button" class="nav-item nav-item--l2" data-role="nav-item" data-item-id="dashboard/department" data-level="2">
+          <span class="nav-item__label">部门看板</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- 数字资产（分组型一级） -->
+    <section class="nav-group" data-group-id="digital-assets">
+      <button type="button" class="nav-item nav-item--l1" data-role="nav-item" data-item-id="digital-assets" data-level="1" data-type="group">
+        <span class="nav-item__icon"><!-- wallet --></span>
+        <span class="nav-item__label">数字资产</span>
+        <span class="nav-item__chev"></span>
+      </button>
+      <div class="nav-group__items">
+        <button type="button" class="nav-item nav-item--l2" data-role="nav-item" data-item-id="digital-assets/knowledge-base" data-level="2">
+          <span class="nav-item__label">知识库</span>
+        </button>
+        <button type="button" class="nav-item nav-item--l2" data-role="nav-item" data-item-id="digital-assets/human-handoff" data-level="2">
+          <span class="nav-item__label">转人工</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- 设置（叶子型一级） -->
+    <button type="button" class="nav-item nav-item--l1" data-role="nav-item" data-item-id="settings" data-level="1" data-type="leaf">
+      <span class="nav-item__icon"><!-- settings --></span>
+      <span class="nav-item__label">设置</span>
+    </button>
+  </div>
+
+  <div class="sidebar__footer">
+    <span class="sidebar__footer-avatar">PM</span>
+    <span class="sidebar__footer-text">
+      <span class="sidebar__footer-name">王启明</span>
+      <span class="sidebar__footer-role">PM · 海外项目部</span>
+    </span>
+  </div>
+</aside>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>G-Builder OS V1.0 · 侧边栏交互三版方案</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body data-page="entry">
+    <div class="entry">
+      <header class="entry__header">
+        <span class="entry__brand">
+          <span class="dot"></span>
+          G-Builder OS · V1.0
+        </span>
+        <h1 class="entry__title">侧边栏交互三版方案</h1>
+        <p class="entry__desc">
+          基于 G-Builder OS V1.0 脑图的导航结构（7 个一级、8 个二级），同一份信息架构在三种交互形态下的对比。三版共享视觉规范，差异只在「分组型一级是否默认展开、是否可折叠、是否使用图标」。
+        </p>
+      </header>
+
+      <div class="entry__cards" data-role="entry-cards">
+        <!-- 由 app.js 注入三张方案卡 -->
+      </div>
+
+      <footer class="entry__footer">
+        预览运行于 <code>http://localhost:8766/</code> · 数据来源严格对齐 V1.0 脑图，节点上的圆圈数字（开发评审标注的功能点数量）不参与侧边栏设计
+      </footer>
+    </div>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
