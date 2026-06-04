@@ -1,0 +1,1682 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="互联网产品经理张奥的个人作品集主页">
+  <title>张奥｜互联网产品经理作品集</title>
+  <style>
+    :root {
+      --ink: #132238;
+      --muted: #657289;
+      --blue: #2457d6;
+      --blue-dark: #173b93;
+      --blue-soft: #eef4ff;
+      --cyan: #19a9c8;
+      --orange: #f08a45;
+      --line: #e3e9f1;
+      --panel: #f7f9fc;
+      --white: #ffffff;
+      --shadow: 0 20px 50px rgba(23, 59, 147, 0.09);
+      --radius: 20px;
+      --max: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 88px;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--white);
+      font-family: Inter, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .container {
+      width: min(calc(100% - 40px), var(--max));
+      margin: 0 auto;
+    }
+
+    .fiction-bar {
+      position: relative;
+      z-index: 20;
+      padding: 8px 20px;
+      color: #526078;
+      background: #f5f7fb;
+      border-bottom: 1px solid var(--line);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-align: center;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 15;
+      background: rgba(255, 255, 255, 0.9);
+      border-bottom: 1px solid rgba(227, 233, 241, 0.8);
+      backdrop-filter: blur(18px);
+    }
+
+    .nav-wrap {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      color: var(--white);
+      background: var(--ink);
+      border-radius: 10px;
+      font-size: 13px;
+      letter-spacing: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      color: #526078;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .nav-links a {
+      position: relative;
+      padding: 24px 0 22px;
+      transition: color 0.25s ease;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: 15px;
+      left: 0;
+      height: 2px;
+      background: var(--blue);
+      transform: scaleX(0);
+      transition: transform 0.25s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--blue);
+    }
+
+    .nav-links a.active::after {
+      transform: scaleX(1);
+    }
+
+    .nav-cta {
+      padding: 9px 16px !important;
+      color: var(--white) !important;
+      background: var(--blue);
+      border-radius: 10px;
+    }
+
+    .nav-cta::after {
+      display: none;
+    }
+
+    .menu-button {
+      display: none;
+      width: 42px;
+      height: 42px;
+      padding: 0;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      cursor: pointer;
+    }
+
+    .menu-button span {
+      display: block;
+      width: 18px;
+      height: 2px;
+      margin: 4px auto;
+      background: var(--ink);
+    }
+
+    .hero {
+      position: relative;
+      min-height: 740px;
+      padding: 86px 0 72px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: -120px;
+      right: -170px;
+      width: 620px;
+      height: 620px;
+      background:
+        radial-gradient(circle at 40% 35%, rgba(36, 87, 214, 0.16), transparent 42%),
+        radial-gradient(circle at 64% 64%, rgba(25, 169, 200, 0.15), transparent 38%);
+      border-radius: 50%;
+      filter: blur(2px);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: -120px;
+      bottom: -140px;
+      width: 390px;
+      height: 390px;
+      background: radial-gradient(circle, rgba(240, 138, 69, 0.1), transparent 66%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      align-items: center;
+      gap: 72px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 22px;
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 2px;
+      background: currentColor;
+    }
+
+    .availability {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: 10px;
+      padding: 5px 9px;
+      color: #15704a;
+      background: #eaf8f1;
+      border-radius: 999px;
+      font-size: 11px;
+      letter-spacing: 0;
+    }
+
+    .availability::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      background: #24a66a;
+      border-radius: 50%;
+      box-shadow: 0 0 0 4px rgba(36, 166, 106, 0.12);
+    }
+
+    h1 {
+      max-width: 760px;
+      margin: 0 0 22px;
+      font-size: clamp(46px, 6vw, 76px);
+      line-height: 1.1;
+      letter-spacing: -0.055em;
+    }
+
+    h1 span {
+      color: var(--blue);
+    }
+
+    .hero-lead {
+      max-width: 665px;
+      margin: 0 0 32px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.9;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 44px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 48px;
+      padding: 0 20px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 750;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button-primary {
+      color: var(--white);
+      background: var(--blue);
+      box-shadow: 0 12px 24px rgba(36, 87, 214, 0.2);
+    }
+
+    .button-primary:hover {
+      background: var(--blue-dark);
+      box-shadow: 0 16px 30px rgba(36, 87, 214, 0.26);
+    }
+
+    .button-secondary {
+      color: var(--ink);
+      background: var(--white);
+      border-color: var(--line);
+    }
+
+    .button-secondary:hover {
+      border-color: #b9c7dd;
+      box-shadow: 0 12px 24px rgba(19, 34, 56, 0.08);
+    }
+
+    .icon {
+      width: 18px;
+      height: 18px;
+      flex: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 26px;
+      color: #516078;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .profile-card {
+      position: relative;
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.68);
+      border: 1px solid rgba(227, 233, 241, 0.9);
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .profile-visual {
+      position: relative;
+      min-height: 470px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: var(--white);
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.09), transparent 45%),
+        linear-gradient(145deg, #16336f, #2457d6 58%, #2b81bf);
+      border-radius: 21px;
+      overflow: hidden;
+    }
+
+    .profile-visual::before {
+      content: "";
+      position: absolute;
+      top: -90px;
+      right: -80px;
+      width: 270px;
+      height: 270px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      box-shadow:
+        0 0 0 38px rgba(255, 255, 255, 0.035),
+        0 0 0 76px rgba(255, 255, 255, 0.025);
+    }
+
+    .profile-top {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .avatar {
+      width: 84px;
+      height: 84px;
+      display: grid;
+      place-items: center;
+      color: var(--white);
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 50%;
+      font-family: Georgia, serif;
+      font-size: 34px;
+      font-weight: 700;
+    }
+
+    .profile-chip {
+      padding: 7px 10px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .profile-quote {
+      position: relative;
+      z-index: 2;
+    }
+
+    .quote-mark {
+      display: block;
+      margin-bottom: -10px;
+      color: rgba(255, 255, 255, 0.35);
+      font-family: Georgia, serif;
+      font-size: 72px;
+      line-height: 1;
+    }
+
+    .profile-quote p {
+      max-width: 320px;
+      margin: 0 0 22px;
+      font-size: 23px;
+      font-weight: 700;
+      line-height: 1.5;
+      letter-spacing: -0.02em;
+    }
+
+    .profile-signature strong,
+    .profile-signature span {
+      display: block;
+    }
+
+    .profile-signature span {
+      margin-top: 3px;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 12px;
+    }
+
+    .stats-strip {
+      position: relative;
+      z-index: 3;
+      margin-top: -50px;
+    }
+
+    .stats-grid {
+      padding: 28px 34px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 18px 45px rgba(19, 34, 56, 0.08);
+    }
+
+    .stat {
+      position: relative;
+      padding-left: 20px;
+      border-left: 2px solid var(--line);
+    }
+
+    .stat:first-child {
+      border-left-color: var(--blue);
+    }
+
+    .stat:nth-child(2) {
+      border-left-color: var(--cyan);
+    }
+
+    .stat:nth-child(3) {
+      border-left-color: var(--orange);
+    }
+
+    .stat:nth-child(4) {
+      border-left-color: #8b69dc;
+    }
+
+    .stat-value {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--ink);
+      font-size: 28px;
+      font-weight: 850;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    section {
+      padding: 108px 0;
+    }
+
+    .section-muted {
+      background: var(--panel);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-heading {
+      margin-bottom: 48px;
+      display: grid;
+      grid-template-columns: 0.72fr 1.28fr;
+      align-items: end;
+      gap: 60px;
+    }
+
+    .section-kicker {
+      display: block;
+      margin-bottom: 12px;
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(34px, 4vw, 48px);
+      line-height: 1.18;
+      letter-spacing: -0.04em;
+    }
+
+    .section-heading p {
+      max-width: 650px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .experience-layout {
+      display: grid;
+      grid-template-columns: 1.28fr 0.72fr;
+      gap: 28px;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 18px;
+    }
+
+    .experience-card,
+    .skill-panel,
+    .project-card,
+    .contact-panel {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .experience-card:hover,
+    .skill-panel:hover,
+    .project-card:hover {
+      transform: translateY(-5px);
+      border-color: #c6d2e4;
+      box-shadow: var(--shadow);
+    }
+
+    .experience-card {
+      padding: 30px;
+    }
+
+    .experience-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 22px;
+      margin-bottom: 19px;
+    }
+
+    .company {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .company-logo {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      color: var(--blue);
+      background: var(--blue-soft);
+      border-radius: 13px;
+      font-size: 14px;
+      font-weight: 850;
+    }
+
+    .company h3 {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.35;
+    }
+
+    .company p {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .date-pill {
+      flex: none;
+      padding: 6px 10px;
+      color: #526078;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .experience-summary {
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .achievement-list {
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 11px;
+      list-style: none;
+    }
+
+    .achievement-list li {
+      position: relative;
+      padding-left: 20px;
+      color: #405069;
+      font-size: 13px;
+    }
+
+    .achievement-list li::before {
+      content: "";
+      position: absolute;
+      top: 8px;
+      left: 0;
+      width: 7px;
+      height: 7px;
+      background: var(--blue);
+      border-radius: 50%;
+      box-shadow: 0 0 0 4px var(--blue-soft);
+    }
+
+    .skill-panel {
+      padding: 30px;
+    }
+
+    .skill-panel h3 {
+      margin: 0 0 6px;
+      font-size: 18px;
+    }
+
+    .skill-panel > p {
+      margin: 0 0 25px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .skill-list {
+      display: grid;
+      gap: 20px;
+    }
+
+    .skill-line {
+      display: grid;
+      gap: 8px;
+    }
+
+    .skill-label {
+      display: flex;
+      justify-content: space-between;
+      color: #405069;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .skill-label span:last-child {
+      color: var(--blue);
+    }
+
+    .skill-track {
+      height: 7px;
+      background: #edf1f6;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .skill-fill {
+      height: 100%;
+      width: var(--level);
+      background: linear-gradient(90deg, var(--blue), var(--cyan));
+      border-radius: inherit;
+      transform-origin: left;
+    }
+
+    .tool-block {
+      margin-top: 32px;
+      padding-top: 26px;
+      border-top: 1px solid var(--line);
+    }
+
+    .tool-block strong {
+      display: block;
+      margin-bottom: 13px;
+      font-size: 12px;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      padding: 6px 10px;
+      color: #526078;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .method-card {
+      margin-top: 18px;
+      padding: 20px;
+      color: var(--white);
+      background: var(--ink);
+      border-radius: 15px;
+    }
+
+    .method-card span {
+      display: block;
+      margin-bottom: 7px;
+      color: #aebbd0;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .method-card p {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 650;
+      line-height: 1.75;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .project-card {
+      min-height: 520px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .project-cover {
+      position: relative;
+      min-height: 176px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: var(--white);
+      overflow: hidden;
+    }
+
+    .project-card:nth-child(1) .project-cover {
+      background: linear-gradient(145deg, #183875, #2869d8);
+    }
+
+    .project-card:nth-child(2) .project-cover {
+      background: linear-gradient(145deg, #176070, #22a4bf);
+    }
+
+    .project-card:nth-child(3) .project-cover {
+      background: linear-gradient(145deg, #633c78, #a76fbd);
+    }
+
+    .project-cover::after {
+      content: "";
+      position: absolute;
+      right: -55px;
+      bottom: -70px;
+      width: 190px;
+      height: 190px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      box-shadow:
+        0 0 0 28px rgba(255, 255, 255, 0.04),
+        0 0 0 56px rgba(255, 255, 255, 0.025);
+    }
+
+    .project-index {
+      position: relative;
+      z-index: 2;
+      color: rgba(255, 255, 255, 0.65);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+    }
+
+    .project-cover h3 {
+      position: relative;
+      z-index: 2;
+      max-width: 270px;
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.35;
+      letter-spacing: -0.025em;
+    }
+
+    .project-body {
+      padding: 25px;
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+    }
+
+    .project-role {
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .project-role strong {
+      color: var(--blue);
+    }
+
+    .project-body p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .project-points {
+      margin: 0 0 20px;
+      padding: 0;
+      display: grid;
+      gap: 9px;
+      list-style: none;
+    }
+
+    .project-points li {
+      display: flex;
+      gap: 8px;
+      color: #405069;
+      font-size: 12px;
+    }
+
+    .project-points li::before {
+      content: "↗";
+      color: var(--blue);
+      font-weight: 800;
+    }
+
+    .project-results {
+      margin-top: auto;
+      padding-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      border-top: 1px solid var(--line);
+    }
+
+    .result-box {
+      padding: 10px;
+      background: var(--panel);
+      border-radius: 10px;
+    }
+
+    .result-box strong,
+    .result-box span {
+      display: block;
+    }
+
+    .result-box strong {
+      color: var(--ink);
+      font-size: 17px;
+      line-height: 1.3;
+    }
+
+    .result-box span {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    .project-note {
+      margin: 28px 0 0;
+      color: #7d899b;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .contact-section {
+      padding: 104px 0 64px;
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.93), rgba(255, 255, 255, 0.93)),
+        radial-gradient(circle at 20% 20%, #cddcff, transparent 32%),
+        radial-gradient(circle at 80% 80%, #d1f1f5, transparent 30%);
+    }
+
+    .contact-panel {
+      position: relative;
+      padding: 55px;
+      display: grid;
+      grid-template-columns: 1.18fr 0.82fr;
+      align-items: center;
+      gap: 60px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .contact-panel::before {
+      content: "";
+      position: absolute;
+      top: -120px;
+      right: -110px;
+      width: 300px;
+      height: 300px;
+      background: var(--blue-soft);
+      border-radius: 50%;
+    }
+
+    .contact-copy {
+      position: relative;
+      z-index: 2;
+    }
+
+    .contact-copy h2 {
+      max-width: 600px;
+      margin-bottom: 18px;
+    }
+
+    .contact-copy p {
+      max-width: 610px;
+      margin: 0 0 28px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .strengths {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      list-style: none;
+    }
+
+    .strengths li {
+      padding: 7px 10px;
+      color: #405069;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .contact-card {
+      position: relative;
+      z-index: 2;
+      padding: 28px;
+      color: var(--white);
+      background: var(--ink);
+      border-radius: 18px;
+    }
+
+    .contact-card h3 {
+      margin: 0 0 4px;
+      font-size: 17px;
+    }
+
+    .contact-card > p {
+      margin: 0 0 22px;
+      color: #aebbd0;
+      font-size: 11px;
+    }
+
+    .contact-list {
+      margin: 0 0 24px;
+      padding: 0;
+      display: grid;
+      gap: 13px;
+      list-style: none;
+    }
+
+    .contact-list li {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      color: #e5ecf8;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .contact-list .icon {
+      color: #8fb1ff;
+    }
+
+    .contact-card .button {
+      width: 100%;
+      color: var(--ink);
+      background: var(--white);
+    }
+
+    .copy-feedback {
+      min-height: 19px;
+      margin: 9px 0 0;
+      color: #91d8c1;
+      font-size: 10px;
+      text-align: center;
+    }
+
+    footer {
+      padding: 26px 0;
+      background: var(--white);
+      border-top: 1px solid var(--line);
+    }
+
+    .footer-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      color: #7d899b;
+      font-size: 11px;
+    }
+
+    .footer-wrap strong {
+      color: #526078;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+
+      * {
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .hero {
+        min-height: auto;
+        padding: 70px 0 100px;
+      }
+
+      .hero-grid,
+      .experience-layout,
+      .contact-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-grid {
+        gap: 44px;
+      }
+
+      .profile-card {
+        max-width: 520px;
+      }
+
+      .profile-visual {
+        min-height: 390px;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        row-gap: 25px;
+      }
+
+      .section-heading {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .project-card:last-child {
+        grid-column: span 2;
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .container {
+        width: min(calc(100% - 28px), var(--max));
+      }
+
+      .fiction-bar {
+        padding: 7px 14px;
+        font-size: 10px;
+      }
+
+      .site-header {
+        top: 0;
+      }
+
+      .nav-wrap {
+        min-height: 64px;
+      }
+
+      .menu-button {
+        display: block;
+      }
+
+      .nav-links {
+        position: absolute;
+        top: 64px;
+        right: 14px;
+        left: 14px;
+        padding: 14px;
+        display: none;
+        align-items: stretch;
+        gap: 2px;
+        background: rgba(255, 255, 255, 0.98);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        box-shadow: var(--shadow);
+      }
+
+      .nav-links.open {
+        display: grid;
+      }
+
+      .nav-links a {
+        padding: 10px 12px;
+        border-radius: 8px;
+      }
+
+      .nav-links a:hover {
+        background: var(--panel);
+      }
+
+      .nav-links a::after {
+        display: none;
+      }
+
+      .nav-cta {
+        margin-top: 4px;
+        text-align: center;
+      }
+
+      .hero {
+        padding: 58px 0 86px;
+      }
+
+      h1 {
+        font-size: clamp(40px, 15vw, 58px);
+      }
+
+      .hero-lead {
+        font-size: 15px;
+      }
+
+      .availability {
+        display: flex;
+        width: fit-content;
+        margin: 10px 0 0;
+      }
+
+      .meta-row {
+        display: grid;
+        gap: 12px;
+      }
+
+      .profile-visual {
+        min-height: 350px;
+        padding: 25px;
+      }
+
+      .profile-quote p {
+        font-size: 20px;
+      }
+
+      .stats-strip {
+        margin-top: -38px;
+      }
+
+      .stats-grid {
+        padding: 22px;
+        gap: 18px 10px;
+      }
+
+      .stat {
+        padding-left: 12px;
+      }
+
+      .stat-value {
+        font-size: 22px;
+      }
+
+      section {
+        padding: 78px 0;
+      }
+
+      .section-heading {
+        margin-bottom: 32px;
+      }
+
+      .experience-card,
+      .skill-panel {
+        padding: 22px;
+      }
+
+      .experience-head {
+        display: grid;
+        gap: 14px;
+      }
+
+      .date-pill {
+        width: fit-content;
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .project-card:last-child {
+        grid-column: auto;
+      }
+
+      .project-card {
+        min-height: auto;
+      }
+
+      .contact-section {
+        padding: 76px 0 50px;
+      }
+
+      .contact-panel {
+        padding: 28px 22px;
+        gap: 32px;
+      }
+
+      .footer-wrap {
+        display: grid;
+        justify-content: start;
+        gap: 6px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="#home" aria-label="返回首页">
+        <span class="brand-mark">ZA</span>
+        <span>张奥 · 产品作品集</span>
+      </a>
+      <button class="menu-button" type="button" aria-label="打开导航菜单" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav-links" aria-label="主导航">
+        <a href="#home" class="active">首页</a>
+        <a href="#experience">经历与技能</a>
+        <a href="#projects">代表项目</a>
+        <a href="#contact" class="nav-cta">联系我</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <p class="eyebrow">
+            Internet Product Manager
+            <span class="availability">开放新机会</span>
+          </p>
+          <h1>把复杂问题，做成<span>简单产品</span>。</h1>
+          <p class="hero-lead">
+            你好，我是张奥，一名拥有 6 年经验的互联网产品经理。专注用户增长、内容分发与会员商业化，擅长从业务目标出发，连接用户洞察、数据策略与跨团队协作。
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#projects">
+              查看代表项目
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M14 7l5 5-5 5"/></svg>
+            </a>
+            <a class="button button-secondary" href="#contact">
+              了解合作方式
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4zM4 7l8 6 8-6"/></svg>
+            </a>
+          </div>
+          <div class="meta-row">
+            <span class="meta-item">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="2.5"/></svg>
+              中国 · 上海
+            </span>
+            <span class="meta-item">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4zM4 7l8 6 8-6"/></svg>
+              zhang.ao@example.com
+            </span>
+            <span class="meta-item">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              6 年产品经验
+            </span>
+          </div>
+        </div>
+
+        <aside class="profile-card reveal" aria-label="个人产品理念">
+          <div class="profile-visual">
+            <div class="profile-top">
+              <div class="avatar" aria-hidden="true">张</div>
+              <span class="profile-chip">产品经理档案</span>
+            </div>
+            <div class="profile-quote">
+              <span class="quote-mark">“</span>
+              <p>产品不是功能的集合，而是对真实问题的一次清晰回答。</p>
+              <div class="profile-signature">
+                <strong>张奥</strong>
+                <span>互联网产品经理 · 用户增长 / 内容产品</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <div class="container stats-strip reveal" aria-label="核心成果数据">
+      <div class="stats-grid">
+        <div class="stat"><strong class="stat-value">6 年</strong><span class="stat-label">互联网产品经验</span></div>
+        <div class="stat"><strong class="stat-value">3,200 万</strong><span class="stat-label">累计服务用户规模</span></div>
+        <div class="stat"><strong class="stat-value">18 个</strong><span class="stat-label">主导上线项目</span></div>
+        <div class="stat"><strong class="stat-value">+34%</strong><span class="stat-label">核心业务峰值增长</span></div>
+      </div>
+    </div>
+
+    <section class="section-muted" id="experience">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div>
+            <span class="section-kicker">Experience & Capabilities</span>
+            <h2>经历与核心能力</h2>
+          </div>
+          <p>围绕用户价值与业务结果开展产品工作，从问题定义、方案设计到数据复盘，建立可持续迭代的产品闭环。</p>
+        </div>
+
+        <div class="experience-layout">
+          <div class="timeline">
+            <article class="experience-card reveal">
+              <div class="experience-head">
+                <div class="company">
+                  <div class="company-logo">星河</div>
+                  <div>
+                    <h3>高级产品经理 · 用户增长</h3>
+                    <p>星河互动科技</p>
+                  </div>
+                </div>
+                <span class="date-pill">2023.04 — 至今</span>
+              </div>
+              <p class="experience-summary">
+                负责内容社区增长产品线，带领 8 人跨职能项目组，围绕新用户承接、内容消费与用户召回搭建增长体系。
+              </p>
+              <ul class="achievement-list">
+                <li>重构新用户首周成长路径，将次日留存率从 32.8% 提升至 41.6%，累计覆盖 1,200 万新用户。</li>
+                <li>主导用户分层与智能触达平台建设，召回活动人均产出提升 27%，月度节约运营工时约 160 小时。</li>
+                <li>建立增长实验规范与指标看板，将实验决策周期由 14 天缩短至 6 天，季度有效实验率提升至 68%。</li>
+              </ul>
+            </article>
+
+            <article class="experience-card reveal">
+              <div class="experience-head">
+                <div class="company">
+                  <div class="company-logo">知序</div>
+                  <div>
+                    <h3>产品经理 · 内容与商业化</h3>
+                    <p>知序网络科技</p>
+                  </div>
+                </div>
+                <span class="date-pill">2020.07 — 2023.03</span>
+              </div>
+              <p class="experience-summary">
+                负责内容推荐、创作者工具及会员业务，持续提升内容供给质量、消费效率和用户付费意愿。
+              </p>
+              <ul class="achievement-list">
+                <li>完成首页推荐流策略与交互改版，人均内容浏览量提升 19%，优质内容曝光占比提升 23%。</li>
+                <li>从 0 到 1 设计会员权益体系，上线首年付费用户突破 42 万，续费率稳定在 61%。</li>
+                <li>搭建创作者数据中心与选题助手，月活跃创作者数量增长 35%，内容发布效率提升 22%。</li>
+              </ul>
+            </article>
+          </div>
+
+          <aside class="skill-panel reveal">
+            <h3>产品能力图谱</h3>
+            <p>能力数值仅用于页面展示，不代表标准化测评结果。</p>
+            <div class="skill-list">
+              <div class="skill-line">
+                <div class="skill-label"><span>产品规划与需求管理</span><span>92%</span></div>
+                <div class="skill-track"><div class="skill-fill" style="--level:92%"></div></div>
+              </div>
+              <div class="skill-line">
+                <div class="skill-label"><span>用户研究与体验设计</span><span>88%</span></div>
+                <div class="skill-track"><div class="skill-fill" style="--level:88%"></div></div>
+              </div>
+              <div class="skill-line">
+                <div class="skill-label"><span>数据分析与增长实验</span><span>90%</span></div>
+                <div class="skill-track"><div class="skill-fill" style="--level:90%"></div></div>
+              </div>
+              <div class="skill-line">
+                <div class="skill-label"><span>跨团队项目推进</span><span>86%</span></div>
+                <div class="skill-track"><div class="skill-fill" style="--level:86%"></div></div>
+              </div>
+            </div>
+
+            <div class="tool-block">
+              <strong>常用工具与方法</strong>
+              <div class="tag-list">
+                <span class="tag">Figma</span>
+                <span class="tag">Axure</span>
+                <span class="tag">SQL</span>
+                <span class="tag">Tableau</span>
+                <span class="tag">A/B Test</span>
+                <span class="tag">用户访谈</span>
+                <span class="tag">增长模型</span>
+                <span class="tag">敏捷协作</span>
+              </div>
+            </div>
+
+            <div class="method-card">
+              <span>Working Method</span>
+              <p>先定义问题与成功标准，再组织方案；用小步实验降低不确定性，用数据和用户反馈完成决策闭环。</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div>
+            <span class="section-kicker">Selected Projects</span>
+            <h2>代表项目</h2>
+          </div>
+          <p>精选三类互联网产品实践，分别对应用户增长、内容分发和会员商业化。</p>
+        </div>
+
+        <div class="projects-grid">
+          <article class="project-card reveal">
+            <div class="project-cover">
+              <span class="project-index">PROJECT 01 · GROWTH</span>
+              <h3>星河用户增长与智能触达平台</h3>
+            </div>
+            <div class="project-body">
+              <div class="project-role"><strong>产品负责人</strong><span>2024 · 8 个月</span></div>
+              <p>面对触达渠道分散、运营配置成本高和效果归因困难的问题，搭建面向运营团队的一站式增长工作台。</p>
+              <ul class="project-points">
+                <li>统一人群圈选、策略编排与多渠道触达能力</li>
+                <li>设计用户分层标签和自动化生命周期旅程</li>
+                <li>建立活动归因、实验对照和实时预警机制</li>
+              </ul>
+              <div class="project-results">
+                <div class="result-box"><strong>+27%</strong><span>召回活动人均产出</span></div>
+                <div class="result-box"><strong>-48%</strong><span>活动配置耗时</span></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-cover">
+              <span class="project-index">PROJECT 02 · CONTENT</span>
+              <h3>知序内容推荐流体验升级</h3>
+            </div>
+            <div class="project-body">
+              <div class="project-role"><strong>核心产品经理</strong><span>2022 · 5 个月</span></div>
+              <p>针对推荐内容同质化、探索效率低的问题，通过内容结构、反馈机制和策略协同优化用户消费体验。</p>
+              <ul class="project-points">
+                <li>重构首页信息层级和沉浸式内容卡片</li>
+                <li>补充负反馈、兴趣探索与内容质量信号</li>
+                <li>联合算法团队制定分层实验和评估指标</li>
+              </ul>
+              <div class="project-results">
+                <div class="result-box"><strong>+19%</strong><span>人均内容浏览量</span></div>
+                <div class="result-box"><strong>+12%</strong><span>7 日用户留存率</span></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-cover">
+              <span class="project-index">PROJECT 03 · MEMBERSHIP</span>
+              <h3>知序会员体系从 0 到 1 建设</h3>
+            </div>
+            <div class="project-body">
+              <div class="project-role"><strong>项目产品经理</strong><span>2021 · 10 个月</span></div>
+              <p>从用户价值与内容供给出发，定义差异化会员权益，完成定价、购买、履约、续费与数据监控全链路设计。</p>
+              <ul class="project-points">
+                <li>完成用户调研、权益组合与价格敏感度测试</li>
+                <li>设计多端购买链路和会员身份感知体系</li>
+                <li>建立权益使用、续费预测与流失召回机制</li>
+              </ul>
+              <div class="project-results">
+                <div class="result-box"><strong>42 万</strong><span>首年付费用户</span></div>
+                <div class="result-box"><strong>61%</strong><span>会员续费率</span></div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-section" id="contact">
+      <div class="container">
+        <div class="contact-panel reveal">
+          <div class="contact-copy">
+            <span class="section-kicker">Let’s Work Together</span>
+            <h2>寻找下一段值得投入的产品旅程</h2>
+            <p>
+              期待加入重视用户价值、鼓励跨职能协作并相信长期主义的团队。希望继续深耕用户增长、内容产品或会员商业化方向。
+            </p>
+            <ul class="strengths" aria-label="个人优势">
+              <li>业务理解与问题定义</li>
+              <li>复杂项目落地</li>
+              <li>数据驱动决策</li>
+              <li>用户体验意识</li>
+            </ul>
+          </div>
+
+          <aside class="contact-card">
+            <h3>张奥 · 互联网产品经理</h3>
+            <p>欢迎通过邮箱联系</p>
+            <ul class="contact-list">
+              <li>
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4zM4 7l8 6 8-6"/></svg>
+                zhang.ao@example.com
+              </li>
+              <li>
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                中国 · 上海
+              </li>
+              <li>
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                工作日 24 小时内回复
+              </li>
+            </ul>
+            <button class="button" id="copy-email" type="button">
+              复制邮箱地址
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
+            </button>
+            <p class="copy-feedback" id="copy-feedback" aria-live="polite"></p>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-wrap">
+      <span><strong>张奥 · 产品作品集</strong> © 2026</span>
+      <span>以用户价值连接产品设计与业务增长。</span>
+    </div>
+  </footer>
+
+  <script>
+    const menuButton = document.querySelector(".menu-button");
+    const navLinks = document.querySelector(".nav-links");
+    const navItems = document.querySelectorAll(".nav-links a");
+
+    menuButton.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+      menuButton.setAttribute("aria-expanded", String(isOpen));
+      menuButton.setAttribute("aria-label", isOpen ? "关闭导航菜单" : "打开导航菜单");
+    });
+
+    navItems.forEach((item) => {
+      item.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuButton.setAttribute("aria-expanded", "false");
+      });
+    });
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(".reveal").forEach((element) => revealObserver.observe(element));
+
+    const sections = document.querySelectorAll("main section[id]");
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        navItems.forEach((item) => {
+          item.classList.toggle("active", item.getAttribute("href") === "#" + entry.target.id);
+        });
+      });
+    }, { rootMargin: "-35% 0px -55% 0px" });
+
+    sections.forEach((section) => sectionObserver.observe(section));
+
+    const copyButton = document.getElementById("copy-email");
+    const copyFeedback = document.getElementById("copy-feedback");
+    copyButton.addEventListener("click", async () => {
+      const email = "zhang.ao@example.com";
+      let copied = false;
+      try {
+        await navigator.clipboard.writeText(email);
+        copied = true;
+      } catch (error) {
+        const helper = document.createElement("textarea");
+        helper.value = email;
+        helper.setAttribute("readonly", "");
+        helper.style.position = "fixed";
+        helper.style.opacity = "0";
+        document.body.appendChild(helper);
+        helper.select();
+        copied = document.execCommand("copy");
+        helper.remove();
+      }
+      copyFeedback.textContent = copied ? "邮箱地址已复制" : "复制失败，请手动复制：zhang.ao@example.com";
+      window.setTimeout(() => {
+        copyFeedback.textContent = "";
+      }, 2600);
+    });
+  </script>
+</body>
+</html>
